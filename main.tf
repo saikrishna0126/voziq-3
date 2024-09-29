@@ -112,23 +112,25 @@ resource "aws_security_group" "demo-sg" {
   }
 }
 
-resource "tls_private_key" "vpc-private" {
+resource "aws_key_pair" "test" {
+  key_name   = "test"
+  public_key = tls_private_key.rsa.public_key_openssh
+
+}
+
+resource "tls_private_key" "rsa" {
   algorithm = "RSA"
   rsa_bits  = 4096
-
 }
 
-resource "aws_key_pair" "public" {
-  public_key = tls_private_key.vpc-private.public_key_openssh
+resource "local_file" "test" {
+  content  = tls_private_key.rsa.private_key_pem
+  filename = "test-key"
 
   provisioner "local-exec" {
-    command = <<EOT
-  echo "Running local-exec provisioner"
-  echo '${tls_private_key.vpc-private.private_key_pem}' > C:/Users/DELL/vpc/my-keypai.pem
-  EOT
-  }
+    command = "chmod 600 ${local_file.test.filename}"
 
-}
+  }
 
 
 # Create EC2 instances within the VPC (4 Linux in private, and one Windows in public)
