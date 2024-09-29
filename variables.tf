@@ -43,10 +43,24 @@ variable "ssh_port" {
   type        = number
   default     = 22
 }
+variable "key_name" {
+  description = "The name of the key pair"
+  type        = string
+  default     = "test"  # You can change this default value
+}
 
-# variable "key_" {
+variable "private_key_filename" {
+  description = "The filename to save the private key"
+  type        = string
+  default     = "test-key"  # You can change this default value
+}
 
-# }
+variable "rsa_bits" {
+  description = "The number of bits for the RSA key"
+  type        = number
+  default     = 4096  # You can change this value if needed
+}
+
 variable "ami_id_linux" {
   description = "AMI ID for the Linux ubuntu(22.04) instance"
   type        = string
