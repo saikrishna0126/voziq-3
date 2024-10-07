@@ -23,7 +23,7 @@ variable "private_subnet_cidr" {
 variable "azs" {
   description = "List of availability zones"
   type        = list(string)
-  default     = ["us-west-2a", "us-west-2b", "us-west-2c"]
+  default     = ["us-west-2a", "us-west-2b"]
 }
 
 variable "http_port" {
